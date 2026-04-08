@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Good Morning, Sahana 🌸</title>
+  <style>
+    /* ===== RESET & BASE ===== */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Georgia', serif;
+      overflow: hidden;
+      position: relative;
+      transition: background 1s ease;
+    }
+
+    /* ===== TIME-BASED THEMES ===== */
+    body.morning {
+      background: linear-gradient(160deg, #ffecd2 0%, #fcb69f 40%, #ffd1dc 100%);
+    }
+    body.afternoon {
+      background: linear-gradient(160deg, #fffde7 0%, #fff9c4 40%, #ffe0b2 100%);
+    }
+    body.night {
+      background: linear-gradient(160deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    }
+
+    /* ===== MAIN CARD ===== */
+    .card {
+      background: rgba(255, 255, 255, 0.45);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: 32px;
+      padding: 48px 56px;
+      text-align: center;
+      box-shadow: 0 8px 40px rgba(255, 182, 193, 0.35);
+      max-width: 480px;
+      width: 90%;
+      position: relative;
+      z-index: 10;
+      animation: fadeUp 1s ease both;
+    }
+    body.night .card {
+      background: rgba(255, 255, 255, 0.08);
+      box-shadow: 0 8px 40px rgba(100, 100, 180, 0.25);
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ===== GREETING ===== */
+    .greeting {
+      font-size: 2.2rem;
+      font-weight: bold;
+      color: #b5434a;
+      margin-bottom: 6px;
+      animation: pulse 3s ease-in-out infinite;
+    }
+    body.afternoon .greeting { color: #b07c00; }
+    body.night .greeting { color: #c8b8f8; }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50%       { transform: scale(1.04); }
+    }
+
+    /* ===== NAME ===== */
+    .name {
+      font-size: 1.8rem;
+      color: #e87da0;
+      margin-bottom: 6px;
+      letter-spacing: 1px;
+    }
+    body.afternoon .name { color: #d4880e; }
+    body.night .name { color: #a78bfa; }
+
+    /* ===== CLOCK ===== */
+    .clock {
+      font-size: 1rem;
+      color: #c97f8a;
+      margin-bottom: 28px;
+      opacity: 0.85;
+    }
+    body.night .clock { color: #94a3b8; }
+
+    /* ===== MESSAGE BOX ===== */
+    .message-box {
+      background: rgba(255, 255, 255, 0.55);
+      border-radius: 20px;
+      padding: 16px 22px;
+      margin-bottom: 28px;
+      font-size: 1.05rem;
+      color: #7a3a55;
+      min-height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.4s ease;
+      line-height: 1.6;
+    }
+    body.night .message-box {
+      background: rgba(255,255,255,0.08);
+      color: #ddd6fe;
+    }
+
+    /* ===== BUTTON ===== */
+    .surprise-btn {
+      background: linear-gradient(135deg, #f9a8d4, #fca5a5);
+      color: #fff;
+      border: none;
+      border-radius: 50px;
+      padding: 14px 32px;
+      font-size: 1rem;
+      cursor: pointer;
+      box-shadow: 0 4px 18px rgba(249, 168, 212, 0.5);
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+      font-family: 'Georgia', serif;
+    }
+    .surprise-btn:hover {
+      transform: translateY(-3px) scale(1.04);
+      box-shadow: 0 8px 24px rgba(249, 168, 212, 0.65);
+    }
+    .surprise-btn:active { transform: scale(0.97); }
+    body.afternoon .surprise-btn {
+      background: linear-gradient(135deg, #fcd34d, #fb923c);
+      box-shadow: 0 4px 18px rgba(252, 211, 77, 0.5);
+    }
+    body.night .surprise-btn {
+      background: linear-gradient(135deg, #818cf8, #a78bfa);
+      box-shadow: 0 4px 18px rgba(129, 140, 248, 0.4);
+    }
+
+    /* ===== FLOATING HEARTS ===== */
+    .heart {
+      position: fixed;
+      font-size: 1.4rem;
+      pointer-events: none;
+      animation: floatUp linear infinite;
+      opacity: 0;
+      z-index: 1;
+    }
+    @keyframes floatUp {
+      0%   { transform: translateY(0) rotate(0deg);   opacity: 0; }
+      10%  { opacity: 0.8; }
+      90%  { opacity: 0.6; }
+      100% { transform: translateY(-110vh) rotate(25deg); opacity: 0; }
+    }
+
+    /* ===== CLOUDS ===== */
+    .cloud {
+      position: fixed;
+      font-size: 2.5rem;
+      pointer-events: none;
+      animation: driftCloud linear infinite;
+      opacity: 0.5;
+      top: 8%;
+      z-index: 1;
+    }
+    @keyframes driftCloud {
+      0%   { transform: translateX(-140px); opacity: 0; }
+      5%   { opacity: 0.5; }
+      95%  { opacity: 0.5; }
+      100% { transform: translateX(110vw);  opacity: 0; }
+    }
+
+    /* ===== STARS (night only) ===== */
+    .star {
+      position: fixed;
+      font-size: 1rem;
+      pointer-events: none;
+      animation: twinkle ease-in-out infinite;
+      z-index: 1;
+    }
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.15; transform: scale(0.8); }
+      50%       { opacity: 1;    transform: scale(1.3); }
+    }
+
+    /* ===== DIVIDER ===== */
+    .divider {
+      border: none;
+      border-top: 1.5px dashed rgba(200, 150, 170, 0.35);
+      margin: 22px 0;
+    }
+    body.night .divider { border-color: rgba(200,200,255,0.15); }
+  </style>
+</head>
+<body>
+
+  <!-- Main card -->
+  <div class="card">
+    <div class="greeting" id="greeting">Good Morning ☀️</div>
+    <div class="name">Sahana 🌸</div>
+    <div class="clock" id="clock">—</div>
+    <hr class="divider" />
+    <div class="message-box" id="message-box">
+      Click the button below for a little surprise 💌
+    </div>
+    <button class="surprise-btn" onclick="showSurprise()">Click for a surprise 💌</button>
+  </div>
+
+  <script>
+    // ============================================================
+    // 1. DETECT TIME OF DAY and apply theme
+    // ============================================================
+    function getTimeOfDay() {
+      const hour = new Date().getHours(); // 0–23
+      if (hour < 12) return 'morning';
+      if (hour < 18) return 'afternoon';
+      return 'night';
+    }
+
+    // Greetings for each time of day
+    const greetings = {
+      morning:   'Good Morning ☀️',
+      afternoon: 'Good Afternoon 🌼',
+      night:     'Good Night 🌙',
+    };
+
+    const timeOfDay = getTimeOfDay();
+    document.body.classList.add(timeOfDay);           // applies CSS theme
+    document.getElementById('greeting').textContent = greetings[timeOfDay];
+
+    // ============================================================
+    // 2. LIVE CLOCK — updates every second
+    // ============================================================
+    function updateClock() {
+      const now = new Date();
+      document.getElementById('clock').textContent = now.toLocaleTimeString('en-IN', {
+        hour: '2-digit', minute: '2-digit', second: '2-digit'
+      });
+    }
+    updateClock();
+    setInterval(updateClock, 1000); // run every 1000ms = 1 second
+
+    // ============================================================
+    // 3. RANDOM SURPRISE MESSAGES
+    // ============================================================
+    const messages = [
+      "You are braver than you believe, and stronger than you seem. 💪🌷",
+      "Today is going to be a beautiful day, just like you! 🌺✨",
+      "Don't forget to drink water and be kind to yourself. 💧💕",
+      "You have the power to make someone smile today. 😊🌟",
+      "Every morning is a fresh canvas — paint it with joy! 🎨🌸",
+      "You are doing amazing, even when it doesn't feel like it. 🌈💖",
+      "Small steps still move you forward. Keep going! 🐾🌼",
+      "The world is a little brighter because you're in it. ☀️💛",
+      "You deserve all the good things coming your way. 🌙⭐",
+      "Be gentle with yourself — you're growing every single day. 🌱🦋",
+    ];
+
+    let lastIdx = -1; // remember last message so we don't repeat it
+
+    function showSurprise() {
+      // Pick a random index different from the last one
+      let idx;
+      do {
+        idx = Math.floor(Math.random() * messages.length);
+      } while (idx === lastIdx);
+      lastIdx = idx;
+
+      // Fade out → change text → fade in
+      const box = document.getElementById('message-box');
+      box.style.opacity = '0';
+      setTimeout(() => {
+        box.textContent = messages[idx];
+        box.style.opacity = '1';
+      }, 350);
+    }
+
+    // ============================================================
+    // 4. FLOATING HEARTS — spawn one every 1.2 seconds
+    // ============================================================
+    function spawnHeart() {
+      const el = document.createElement('span');
+      el.className = 'heart';
+      el.textContent = ['💖','💕','🌸','💗','💓'][Math.floor(Math.random() * 5)];
+      el.style.left   = Math.random() * 95 + 'vw';   // random horizontal position
+      el.style.bottom = '-5vh';
+      const dur   = 6 + Math.random() * 6;            // 6–12 seconds
+      const delay = Math.random() * 4;
+      el.style.animationDuration = dur + 's';
+      el.style.animationDelay   = delay + 's';
+      el.style.fontSize = (0.9 + Math.random()) + 'rem';
+      document.body.appendChild(el);
+      // Remove element after animation ends to keep DOM clean
+      setTimeout(() => el.remove(), (dur + delay) * 1000);
+    }
+    spawnHeart();
+    setInterval(spawnHeart, 1200);
+
+    // ============================================================
+    // 5. MOVING CLOUDS — only during morning and afternoon
+    // ============================================================
+    if (timeOfDay !== 'night') {
+      function spawnCloud() {
+        const el = document.createElement('span');
+        el.className = 'cloud';
+        el.textContent = '☁️';
+        el.style.top  = (4 + Math.random() * 20) + 'vh'; // random height
+        const dur = 20 + Math.random() * 20;              // 20–40 seconds
+        el.style.animationDuration = dur + 's';
+        el.style.animationDelay   = Math.random() * 15 + 's';
+        el.style.fontSize = (2 + Math.random() * 1.5) + 'rem';
+        document.body.appendChild(el);
+        setTimeout(() => el.remove(), (dur + 15) * 1000);
+      }
+      spawnCloud();
+      spawnCloud(); // start with 2 clouds already moving
+      setInterval(spawnCloud, 8000);
+    }
+
+    // ============================================================
+    // 6. TWINKLING STARS — only at night
+    // ============================================================
+    if (timeOfDay === 'night') {
+      const starEmoji = ['✨','⭐','🌟','💫'];
+      for (let i = 0; i < 28; i++) {
+        const el = document.createElement('span');
+        el.className = 'star';
+        el.textContent = starEmoji[Math.floor(Math.random() * starEmoji.length)];
+        el.style.top    = Math.random() * 90 + 'vh';  // random position on screen
+        el.style.left   = Math.random() * 95 + 'vw';
+        el.style.fontSize = (0.6 + Math.random() * 0.8) + 'rem';
+        el.style.animationDuration = (2 + Math.random() * 4) + 's';
+        el.style.animationDelay    = (Math.random() * 5) + 's';
+        document.body.appendChild(el);
+      }
+    }
+  </script>
+</body>
+</html>
